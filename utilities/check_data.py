@@ -9,12 +9,19 @@ out_of_range_num = 0
 mapping_conflict_num = 0
 order2driver = {}
 
+
+def save_map(dic, file_path):
+    f = open(file_path, 'w', encoding='utf8')
+    for key in dic.keys():
+        f.write(key + ', ' + dic[key] + '\n')
+    f.close()
+    print('Map already saved in ' + file_path)
+
 lines = file.readlines()
 print('Found ' + str(len(lines)) + ' lines in the file.')
 
 for line in tqdm(lines):
-
-    items = line.split(' ')
+    items = line.split(',')
     if len(items) == 6:
         for item in items:
             if not item:
@@ -46,3 +53,5 @@ if not mapping_conflict_num:
     print('[ID Mapping Conflict Check] No ID mapping conflict in the data set.')
 else:
     print('[ID Mapping Conflict Check] There is(are) ' + str(mapping_conflict_num) + ' ID mapping conflict(s) in the data set.')
+
+save_map(order2driver, '../data/order2driver.csv')
