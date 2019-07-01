@@ -21,7 +21,7 @@ lines = file.readlines()
 print('Found ' + str(len(lines)) + ' lines in the file.')
 
 for line in tqdm(lines):
-    items = line.split(',')
+    items = line[:-1].split(',')
     if len(items) == 6:
         for item in items:
             if not item:

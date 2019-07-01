@@ -13,7 +13,7 @@ output_file = open('../data/didi_sorted.csv', 'w', encoding='utf8')
 
 print('Loading data...')
 for line in tqdm(input_file.readlines()):
-    items = line.split(',')
+    items = line[:-1].split(',')
 
     if items[0] not in dates:
         dates.append(items[0])
