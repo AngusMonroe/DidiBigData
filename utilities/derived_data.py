@@ -159,10 +159,10 @@ def compute_time():
             t0 = datetime.datetime.fromtimestamp(int(items[3]))
             x0 = items[4]
             y0 = items[5]
-        elif items[2] != order:
-            t = datetime.datetime.fromtimestamp(int(items[3]))
-            xt = items[4]
-            yt = items[5]
+        t = datetime.datetime.fromtimestamp(int(items[3]))
+        xt = items[4]
+        yt = items[5]
+        if items[2] != order:
             output_file.write(order + ', ' + str(t0) + ', ' + x0 + ', ' + y0 + ', ' + str(t) + ', ' + xt + ', ' + yt + '\n')
             t0 = datetime.datetime.fromtimestamp(int(items[3]))
             x0 = items[4]
