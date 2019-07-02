@@ -164,6 +164,9 @@ def compute_time():
             xt = items[4]
             yt = items[5]
             output_file.write(order + ', ' + str(t0) + ', ' + x0 + ', ' + y0 + ', ' + str(t) + ', ' + xt + ', ' + yt + '\n')
+            t0 = datetime.datetime.fromtimestamp(int(items[3]))
+            x0 = items[4]
+            y0 = items[5]
         order = items[2]
     input_file.close()
     output_file.close()
@@ -172,6 +175,6 @@ def compute_time():
 if __name__ == '__main__':
     print('Derive start')
     # compute_base_data()
-    compute_v()
-    # compute_time()
+    # compute_v()
+    compute_time()
     print('Done.')
