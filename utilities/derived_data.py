@@ -31,12 +31,13 @@ def compute_base_data():
 
     for order in tqdm(order2detail.keys()):
         past_time = 0
-        detail = order2detail[order]
-        if len(detail.keys()) == 1:
+        detail = list(map(int, order2detail[order].keys()))
+        if len(detail) == 1:
             continue
-        for time in detail.keys():
+        for time in sorted(detail):
+            time = str(time)
             if past_time:
-                x = distance(detail[past_time][0], detail[past_time][1][:-1], detail[time][0], detail[time][1][:-1])
+                x = distance(order2detail[order][past_time][0], order2detail[order][past_time][1], order2detail[order][time][0], order2detail[order][time][1])
                 v = x / (int(time) - int(past_time))
                 if order not in order2derived.keys():
                     order2derived[order] = [[int(past_time), int(time), x, v]]
@@ -174,7 +175,7 @@ def compute_time():
 
 if __name__ == '__main__':
     print('Derive start')
-    # compute_base_data()
-    # compute_v()
-    compute_time()
+    compute_base_data()
+    compute_v()
+    # compute_time()
     print('Done.')
