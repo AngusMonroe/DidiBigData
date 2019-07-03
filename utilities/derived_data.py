@@ -157,6 +157,7 @@ def compute_time():
         items = line[:-1].split(',')
 
         if not order:
+            order = items[2]
             t0 = datetime.datetime.fromtimestamp(int(items[3]))
             x0 = items[4]
             y0 = items[5]
@@ -175,7 +176,7 @@ def compute_time():
 
 if __name__ == '__main__':
     print('Derive start')
-    compute_base_data()
-    compute_v()
-    # compute_time()
+    # compute_base_data()
+    # compute_v()
+    compute_time()
     print('Done.')
