@@ -34,20 +34,23 @@ def compute_base_data():
     for order in tqdm(order2detail.keys()):
         past_time = 0
         detail = list(map(int, order2detail[order].keys()))
+        dis = 0
         if len(detail) == 1:
             continue
         for time in sorted(detail):
             time = str(time)
             if past_time:
                 x = distance(order2detail[order][past_time][0], order2detail[order][past_time][1], order2detail[order][time][0], order2detail[order][time][1])
+                dis += x
                 if order not in order2derived.keys():
                     order2derived[order] = [[int(past_time), int(time), x]]
                 else:
                     order2derived[order].append([int(past_time), int(time), x])
             past_time = time
         derived_data = order2derived[order]
-
         past_time = []
+        order2ratio[order] = [[dis, -2]]
+        dis = 0
         for time in sorted(detail): 
             time = str(time)
             if len(past_time)>=3:
@@ -78,15 +81,16 @@ def compute_turn_times(threshold):
     for order in tqdm(order2ratio.keys()):
         turnNum = 0
         for time in order2ratio[order]:
-            if(time[1]>threshold):
+            if(time[1] == -2): continue
+            if(time[1]>-0.9 and time[1]<-0.7):
                 turnNum += 1
-        order2turnNum[order] = turnNum
+        order2turnNum[order] = turnNum/order2ratio[order][0][0]
     print('start saving')
     with open('../data/order2turnNum.json', 'w', encoding='utf-8') as json_file:
         json.dump(order2turnNum, json_file, ensure_ascii=False)
     print('finish saving')
 
 if __name__ == '__main__':
-    print('Derive start')
+    compute_base_data()    
     compute_turn_times(-0.9)
     print('Done.')
